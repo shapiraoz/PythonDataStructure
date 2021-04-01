@@ -27,6 +27,7 @@ class BinaryTree:
         self.root=None
 
    
+
     
     def _height(self,node):
         if node is None:
@@ -57,8 +58,7 @@ class BinaryTree:
         sr = self._sumNode(node.right)
         return  node.data == sl+sr and  self._isSumTree(node.left) and self._isSumTree(node.right)
 
-    def IsSumTree(self):
-        return self._isSumTree(self.root)
+  
 
     def _printLevelTree(self,node,level):
         if level==0 or node is None:
@@ -69,6 +69,22 @@ class BinaryTree:
             self._printLevelTree(node.left,level-1)
             self._printLevelTree(node.right,level-1)
 
+    def IsSumTree(self):
+        return self._isSumTree(self.root)  
+
+
+    def isBstUntil(self ,node, min,max):
+
+        if node is None:
+             return True
+        if node.data <min or node.data>max :
+            return False
+        
+        return self.isBstUntil(node.left,min,node.data-1) and self.isBstUntil(node.right,node.data+1,max)
+
+
+    def IsBST(self):
+        return self.isBstUntil(self.root,-sys.maxsize-1,sys.maxsize)
 
     def levelTreePrint(self):
         print("level order print")
@@ -250,5 +266,8 @@ if __name__=="__main__":
     print("bt_s tree :")
     bt_s.printPreorderTree()
     print ("bt_s IsSumTree={}!!".format(bt_s.IsSumTree()))
+    print ("bt_s IsBST={}!!".format(bt_s.IsBST()))
+    print ("bt IsBST={}!!".format(bt.IsBST()))
+
     #if stressTest(bt,100000000,500000):
     #    print ("stress pass!")
